@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PublicaYa — Gestión de Tiendas Online</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --bg: #0b0b0f;
+    --surface: #141419;
+    --surface2: #1c1c24;
+    --border: #27272a;
+    --accent: #7c3aed;
+    --accent-light: #a78bfa;
+    --green: #22c55e;
+    --text: #e4e4e7;
+    --muted: #a1a1aa;
+    --dim: #71717a;
+    --radius: 14px;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .nav-contact {
+    color: var(--muted);
+    font-size: .9rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .nav-contact a {
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* ─── SECTIONS ─── */
+  section { max-width: 1100px; margin: 0 auto; padding: 3.5rem 2rem; }
+  
+  .section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: .4rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: .95rem;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #c4b5fd, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 650px;
+    margin: 0 auto 2rem;
+  }
+  .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .85rem 1.8rem;
+    border-radius: 12px;
+    font-size: .95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform .15s, background .2s;
+  }
+  .btn:active { transform: scale(.96); }
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-accent:hover { background: #6d28d9; }
+  .btn-wa { background: var(--green); color: #fff; }
+  .btn-wa:hover { background: #16a34a; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--accent); }
+
+  /* ─── GALLERY ─── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .gallery-item {
+    aspect-ratio: 1;
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--dim);
+    font-size: .85rem;
+    gap: .3rem;
+  }
+  .gallery-item .icon { font-size: 1.8rem; opacity: .5; }
+
+  /* ─── SERVICES ─── */
+  .services-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    font-size: .95rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .deliverables {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+  .deliverable {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+  .deliverable h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: .4rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .deliverable p {
+    color: var(--muted);
+    font-size: .88rem;
+  }
+
+  /* ─── PLANS ─── */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+  .plan {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .2s, transform .2s;
+  }
+  .plan:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .plan.featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #1a1730 0%, var(--surface) 100%);
+    position: relative;
+  }
+  .plan.featured::before {
+    content: '⭐ Recomendado';
+    position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #fff; font-size: .72rem; font-weight: 700;
+    padding: .25rem .8rem; border-radius: 20px; white-space: nowrap;
+  }
+  .plan h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .3rem; }
+  .plan .price {
+    font-size: 2rem; font-weight: 800; color: var(--accent-light); margin: .5rem 0;
+  }
+  .plan .price span { font-size: .8rem; color: var(--dim); font-weight: 500; }
+  .plan ul { list-style: none; margin: 1rem 0; flex: 1; }
+  .plan ul li {
+    padding: .35rem 0; font-size: .88rem; color: var(--muted);
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .plan ul li::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .plan .btn { margin-top: auto; width: 100%; }
+
+  .payment-badge {
+    text-align: center; margin-top: 1.5rem;
+  }
+  .payment-badge span {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .7rem 1.4rem;
+    font-size: .88rem;
+    color: var(--muted);
+  }
+  .payment-badge strong { color: var(--accent-light); }
+
+  /* ─── RESULTS ─── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 2rem; font-weight: 800; color: var(--accent-light);
+  }
+  .stat-card .label {
+    font-size: .85rem; color: var(--muted); margin-top: .3rem;
+  }
+  .results-note {
+    text-align: center; font-size: .8rem; color: var(--dim); font-style: italic;
+  }
+
+  /* ─── VALUE ─── */
+  .value-box {
+    background: linear-gradient(135deg, #1a1730, var(--surface));
+    border: 1px solid #2d2654;
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+  }
+  .value-box h3 {
+    font-size: 1.2rem; font-weight: 700; margin-bottom: .6rem;
+    color: var(--accent-light);
+  }
+  .value-box p {
+    color: var(--muted); font-size: .95rem; max-width: 600px; margin: 0 auto;
+  }
+
+  /* ─── CHECKLIST ─── */
+  .checklist-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+  .checklist-box h3 {
+    font-size: 1.1rem; font-weight: 700; margin-bottom: .3rem;
+  }
+  .checklist-box .sub {
+    color: var(--dim); font-size: .85rem; margin-bottom: 1.2rem;
+  }
+  .checklist-box ol {
+    list-style: none;
+    counter-reset: checklist;
+  }
+  .checklist-box ol li {
+    counter-increment: checklist;
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .92rem;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+  }
+  .checklist-box ol li:last-child { border-bottom: none; }
+  .checklist-box ol li::before {
+    content: counter(checklist);
+    background: var(--accent);
+    color: #fff;
+    min-width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; font-weight: 700;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+  .copy-btn {
+    margin-top: 1.2rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .6rem 1.2rem;
+    border-radius: 10px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .copy-btn:hover { border-color: var(--accent); }
+
+  /* ─── CTA ─── */
+  .cta {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+  .cta h2 {
+    font-size: 1.8rem; font-weight: 800; margin-bottom: .5rem;
+  }
+  .cta p { color: var(--muted); margin-bottom: 1.5rem; }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── WHY ─── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .why-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .why-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .why-icon { font-size: 2rem; margin-bottom: .6rem; }
+  .why-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; }
+  .why-card p { color: var(--muted); font-size: .88rem; }
+
+  /* ─── BENEFITS ─── */
+  .benefits-list {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .benefit-item:last-child { border-bottom: none; }
+  .benefit-check {
+    background: var(--accent);
+    color: #fff;
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 700;
+    flex-shrink: 0;
+    margin-top: .15rem;
+  }
+  .benefit-item strong { font-size: .95rem; }
+  .benefit-item p { color: var(--muted); font-size: .88rem; margin-top: .2rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--dim);
+    font-size: .78rem;
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2rem; }
+    section { padding: 2.5rem 1.2rem; }
+    nav { padding: 1rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">PublicaYa</div>
+  <div class="nav-contact">📞 <a href="tel:+573027742140">+57 302 774 2140</a></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Tu tienda online, gestionada por profesionales</h1>
+  <p>Publico y optimizo tus productos, atiendo a tus clientes y coordino envíos — para que tú vendas más sin estrés.</p>
+  <div class="hero-buttons">
+    <a href="https://wa.me/573027742140?text=Hola%2C%20quiero%20información%20sobre%20los%20servicios%20de%20PublicaYa" class="btn btn-wa">💬 Escríbeme por WhatsApp</a>
+    <a href="#planes" class="btn btn-outline">Ver planes ↓</a>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="por-que">
+  <h2 class="section-title">¿Por qué contratar a PublicaYa?</h2>
+  <p class="section-sub">Razones reales por las que mis clientes confían en mí.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">⏰</div>
+      <h3>Ahorra tiempo</h3>
+      <p>Deja de perder horas subiendo productos, respondiendo mensajes y rastreando envíos. Yo lo hago por ti mientras tú te enfocas en hacer crecer tu negocio.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <h3>Sin inversión grande</h3>
+      <p>No necesitas contratar a un empleado fijo. Empiezas desde $50.000 COP con el plan de prueba y sin compromiso a largo plazo.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📈</div>
+      <h3>Fichas que venden</h3>
+      <p>Títulos optimizados, descripciones atractivas y fotos bien presentadas. Tus productos se ven profesionales y generan más confianza en el comprador.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🤝</div>
+      <h3>Atención personalizada</h3>
+      <p>No soy una agencia genérica. Trabajo directamente contigo, conozco tu negocio y tus productos. Comunicación directa por WhatsApp siempre.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📊</div>
+      <h3>Resultados medibles</h3>
+      <p>Recibes reportes semanales con las consultas, ventas y recomendaciones. Siempre sabes cómo va tu tienda sin tener que revisar plataformas.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚀</div>
+      <h3>Empieza rápido</h3>
+      <p>Envíame tus fotos y datos, y en menos de 48 horas tus productos ya están publicados y optimizados listos para vender.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="beneficios">
+  <h2 class="section-title">Beneficios de trabajar conmigo</h2>
+  <p class="section-sub">Lo que ganas al delegar la operación de tu tienda.</p>
+
+  <div class="benefits-list">
+    <div class="benefit-item">
+      <span class="benefit-check">✓</span>
+      <div>
+        <strong>Más ventas, menos esfuerzo</strong>
+        <p>Fichas bien hechas + atención rápida = más clientes que compran.</p>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-check">✓</span>
+      <div>
+        <strong>No necesitas saber de tecnología</strong>
+        <p>Yo manejo las plataformas por ti. Tú solo me envías los productos y yo hago el resto.</p>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-check">✓</span>
+      <div>
+        <strong>Tus clientes siempre atendidos</strong>
+        <p>Respondo dudas y reclamos rápidamente para que no pierdas ninguna venta por falta de atención.</p>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-check">✓</span>
+      <div>
+        <strong>Envíos sin complicaciones</strong>
+        <p>Genero las guías, hago seguimiento y te aviso cuando se entregan. Cero estrés logístico.</p>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-check">✓</span>
+      <div>
+        <strong>Transparencia total</strong>
+        <p>Reportes semanales claros. Sabes exactamente qué se hizo, qué se vendió y qué mejorar.</p>
+      </div>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-check">✓</span>
+      <div>
+        <strong>Prueba sin riesgo</strong>
+        <p>Plan de prueba de 2 semanas por solo $50.000 COP. Si no te convence, no hay compromiso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeria">
+  <h2 class="section-title">Productos Destacados</h2>
+  <p class="section-sub">Aquí verás algunos de los productos que gestiono para mis clientes.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item"><span class="icon">📷</span>Producto 1</div>
+    <div class="gallery-item"><span class="icon">📷</span>Producto 2</div>
+    <div class="gallery-item"><span class="icon">📷</span>Producto 3</div>
+    <div class="gallery-item"><span class="icon">📷</span>Producto 4</div>
+    <div class="gallery-item"><span class="icon">📷</span>Producto 5</div>
+    <div class="gallery-item"><span class="icon">📷</span>Producto 6</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicios">
+  <h2 class="section-title">¿Qué hago por tu tienda?</h2>
+  <p class="section-sub">Gestiono tiendas online desde casa para que el dueño ahorre tiempo y venda más.</p>
+  
+  <div class="services-intro">
+    Publico y optimizo fichas de producto, atiendo clientes por WhatsApp, Instagram y marketplaces, coordino envíos y entrego reportes simples — todo para que tú te concentres en tu negocio.
+  </div>
+
+  <div class="deliverables">
+    <div class="deliverable">
+      <h3>📝 Fichas de Producto</h3>
+      <p>Publicación y optimización completa: título, descripción, fotos, precio y variantes. Fichas atractivas que venden.</p>
+    </div>
+    <div class="deliverable">
+      <h3>💬 Atención al Cliente</h3>
+      <p>Respuestas rápidas a consultas, manejo de dudas y reclamos por WhatsApp, Instagram y marketplaces.</p>
+    </div>
+    <div class="deliverable">
+      <h3>🚚 Gestión de Envíos</h3>
+      <p>Generación de guías de envío y seguimiento hasta la entrega. Sin dolores de cabeza logísticos.</p>
+    </div>
+    <div class="deliverable">
+      <h3>📊 Reporte Semanal</h3>
+      <p>Resumen de consultas recibidas, ventas realizadas y recomendaciones de mejora para tu tienda.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="planes">
+  <h2 class="section-title">Planes y Precios</h2>
+  <p class="section-sub">Elige el plan que mejor se adapte a tu negocio.</p>
+
+  <div class="plans-grid">
+    <div class="plan">
+      <h3>🧪 Prueba</h3>
+      <div class="price">$50.000 <span>COP / 2 semanas</span></div>
+      <ul>
+        <li>10 productos publicados</li>
+        <li>Fichas profesionales optimizadas</li>
+        <li>50% inicial para comenzar</li>
+        <li>Sin compromiso a largo plazo</li>
+      </ul>
+      <a href="https://wa.me/573027742140?text=Hola%2C%20quiero%20el%20plan%20Prueba%20(10%20productos%20x%202%20semanas)" class="btn btn-wa">💬 Contratar</a>
+    </div>
+
+    <div class="plan featured">
+      <h3>📦 Básico Mensual</h3>
+      <div class="price">$150.000 <span>COP / mes</span></div>
+      <ul>
+        <li>20 productos publicados</li>
+        <li>Atención al cliente 8 h/semana</li>
+        <li>Reporte semanal incluido</li>
+        <li>Gestión de envíos</li>
+        <li>Mejor relación calidad-precio</li>
+      </ul>
+      <a href="https://wa.me/573027742140?text=Hola%2C%20quiero%20el%20plan%20B%C3%A1sico%20Mensual%20(20%20productos)" class="btn btn-wa">💬 Contratar</a>
+    </div>
+
+    <div class="plan">
+      <h3>🎯 Pago por Ficha</h3>
+      <div class="price">$6.000–12.000 <span>COP / producto</span></div>
+      <ul>
+        <li>Publicaciones puntuales</li>
+        <li>Sin compromiso mensual</li>
+        <li>Precio según complejidad</li>
+        <li>Ideal para pocas publicaciones</li>
+      </ul>
+      <a href="https://wa.me/573027742140?text=Hola%2C%20me%20interesa%20el%20Pago%20por%20Ficha" class="btn btn-wa">💬 Contratar</a>
+    </div>
+  </div>
+
+  <div class="payment-badge">
+    <span>💳 Pagos por <strong>Nequi</strong> · Se requiere <strong>50% inicial</strong> para nuevos clientes</span>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="resultados">
+  <h2 class="section-title">Ejemplo de Resultados</h2>
+  <p class="section-sub">Lo que puedes esperar al trabajar con PublicaYa.</p>
+  
+  <div class="results-grid">
+    <div class="stat-card">
+      <div class="number">+40%</div>
+      <div class="label">Más visitas a tus productos</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">< 2h</div>
+      <div class="label">Tiempo de respuesta a clientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">20+</div>
+      <div class="label">Fichas publicadas/mes</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">100%</div>
+      <div class="label">Envíos gestionados</div>
+    </div>
+  </div>
+  <p class="results-note">* Proyección basada en la optimización típica de fichas de producto en marketplaces.</p>
+</section>
+
+<!-- VALUE PROP -->
+<section>
+  <div class="value-box">
+    <h3>💡 ¿Por qué elegir PublicaYa?</h3>
+    <p>Menos trabajo operativo, fichas más atractivas y mayor probabilidad de venta — sin que tengas que aprender a manejar plataformas. Tú te enfocas en tu producto, yo me encargo del resto.</p>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <h2 class="section-title">📋 Checklist para Empezar</h2>
+  <p class="section-sub">Envíame estos datos para comenzar a trabajar en tu tienda.</p>
+  
+  <div class="checklist-box">
+    <h3>Lo que necesito de ti:</h3>
+    <p class="sub">Copia y pega esta lista, completa cada punto y envíamelo por WhatsApp.</p>
+    <ol>
+      <li>Logo de tu negocio en PNG o JPG</li>
+      <li>3 a 5 fotos de tus productos (mínimo 1 foto por producto)</li>
+      <li>Nombre comercial de tu tienda</li>
+      <li>Teléfono o WhatsApp de contacto</li>
+      <li>3 productos destacados con: foto, título, precio y stock disponible</li>
+      <li>Política de envío y devolución breve (1–2 párrafos)</li>
+    </ol>
+    <button class="copy-btn" onclick="copyChecklist()">📋 Copiar checklist</button>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>¿Listo para vender más?</h2>
+  <p>Escríbeme hoy y empieza con el plan de prueba. Sin riesgo, sin compromiso.</p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/573027742140?text=Hola%2C%20quiero%20empezar%20con%20PublicaYa%20🚀" class="btn btn-wa">💬 WhatsApp</a>
+    <a href="tel:+573027742140" class="btn btn-accent">📞 Llamar ahora</a>
+  </div>
+</section>
+
+<footer>© 2025 PublicaYa · Gestión profesional de tiendas online · +57 302 774 2140</footer>
+
+<script>
+function copyChecklist() {
+  const text = `📋 CHECKLIST PARA EMPEZAR CON PUBLICAYA
+
+1. ✅ Logo en PNG o JPG
+2. ✅ 3–5 fotos de productos (mínimo 1 por producto)
+3. ✅ Nombre comercial de la tienda
+4. ✅ Teléfono / WhatsApp de contacto
+5. ✅ 3 productos destacados: foto, título, precio y stock
+6. ✅ Política de envío/devolución breve`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ ¡Copiado!';
+    setTimeout(() => btn.textContent = '📋 Copiar checklist', 2000);
+  });
+}
+</script>
+
+</body>
+</html>
